@@ -27,6 +27,7 @@ import {
     redirectToStaticPage,
     reloadWithStoredParams
 } from './react/features/app';
+import { getCurrentConferenceUrl, willHangup } from './react/features/rejoin';
 
 import EventEmitter from 'events';
 
@@ -2490,6 +2491,9 @@ export default {
      * requested
      */
     hangup(requestFeedback = false) {
+        APP.store.dispatch(
+            willHangup(
+                getCurrentConferenceUrl(APP.store.getState())));
         eventEmitter.emit(JitsiMeetConferenceEvents.BEFORE_HANGUP);
 
         this._stopProxyConnection();
